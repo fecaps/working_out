@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  working_out:
+    build: .
+    container_name: working_out
+    restart: always
+    environment:
+      PHP_IDE_CONFIG: serverName:working_out
