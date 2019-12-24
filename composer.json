@@ -1,0 +1,58 @@
+{
+    "name": "fecaps/working_out",
+    "description": "Working Out Exercises",
+    "require": {
+        "php": "^7.3"
+    },
+    "require-dev": {
+        "brainmaestro/composer-git-hooks": "^2.8",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "object-calisthenics/phpcs-calisthenics-rules": "^3.7",
+        "phpmd/phpmd": "^2.7",
+        "sebastian/phpcpd": "^4.1",
+        "squizlabs/php_codesniffer": "^3.5",
+        "phpunit/phpunit": "^8.5"
+    },
+    "extra": {
+        "hooks": {
+            "pre-commit": [
+                "composer run-script codeStyle",
+                "composer run-script copyPasteDetector",
+                "composer run-script messDetector",
+                "composer run-script objectCalisthenics"
+            ],
+            "pre-push": [
+                "composer run-script codeStyle",
+                "composer run-script copyPasteDetector",
+                "composer run-script messDetector",
+                "composer run-script objectCalisthenics",
+                "composer run-script tests"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fellipe",
+            "email": "fellipecapelli@gmail.com"
+        }
+    ],
+    "scripts": {
+        "codeStyle": "./vendor/bin/phpcs -sw --standard=PSR2 src/",
+        "fixWithCodeSniffer": "./vendor/bin/phpcbf -sw --standard=PSR2 src/",
+        "copyPasteDetector": "vendor/bin/phpcpd --verbose src/",
+        "messDetector": "vendor/bin/phpmd src/ text codesize",
+        "objectCalisthenics": "vendor/bin/phpcs src/ -sp --standard=vendor/object-calisthenics/phpcs-calisthenics-rules/src/ObjectCalisthenics/ruleset.xml",
+        "fixStyle": "./vendor/bin/php-cs-fixer fix ./src",
+        "tests": "./vendor/bin/phpunit"
+    }
+}
